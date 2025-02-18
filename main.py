@@ -1,7 +1,6 @@
-import pandas
-
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import pandas
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 def get_recommendations(group_type, user_interest, data, result_count=5):
     user_input = user_interest + '#' + group_type

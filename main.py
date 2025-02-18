@@ -3,7 +3,6 @@ import pandas
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-
 def get_recommendations(group_type, user_interest, data, result_count=5):
     user_input = user_interest + '#' + group_type
 
@@ -19,9 +18,9 @@ def get_recommendations(group_type, user_interest, data, result_count=5):
     similar_scores = sorted(similar_scores, key=lambda x: x[1], reverse=True)
     similar_scores = similar_scores[1:result_count + 1]
 
-    recom_index = [i[0] for i in similar_scores]
+    recomm_index = [i[0] for i in similar_scores]
 
-    recommendations = data.iloc[recom_index].copy()
+    recommendations = data.iloc[recomm_index].copy()
     recommendations['no'] = range(1, len(recommendations) + 1)
     return recommendations[['no', 'nama', 'deskripsi', 'alamat']]
 
@@ -31,15 +30,15 @@ if __name__ == "__main__":
     user_interest = "Tempat unik untuk berpetualang"
     result_count = 5
 
-    frameYogya = pandas.read_csv('yogyakarta.csv', delimiter=',')
+    place_data_frame = pandas.read_csv('yogyakarta.csv', delimiter=',')
 
-    frameYogya['combined'] = frameYogya['deskripsi'] + '#' + frameYogya['kategori'] + '#' + frameYogya['group']
+    place_data_frame['combined'] = place_data_frame['deskripsi'] + '#' + place_data_frame['kategori'] + '#' + place_data_frame['group']
 
     pandas.set_option('display.max_columns', None)
     pandas.set_option('display.expand_frame_repr', False)
     pandas.set_option('display.max_colwidth', None)
 
-    recommendations = get_recommendations(group_type, user_interest, frameYogya, result_count)
+    recommendations = get_recommendations(group_type, user_interest, place_data_frame, result_count)
 
     print("\nRekomendasi tempat wisata:")
     print(recommendations)
